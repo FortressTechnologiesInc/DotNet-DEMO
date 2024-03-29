@@ -3,12 +3,12 @@ pipeline {
     
     tools{
         
-        jdk 'jdk17'
+        jdk 'jdk'
     }
     
     environment {
         
-        SCANNER_HOME= tool 'sonar-scanner'
+        SCANNER_HOME= tool 'scanner'
     }
 
     stages {
@@ -46,7 +46,7 @@ pipeline {
         stage('Docker Build & Tag') {
             steps {
                 script{
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'docker') {
                         sh "make image"
                     }
                 }
@@ -56,7 +56,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                 script{
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'docker') {
                         sh "make push"
                     }
                 }
